@@ -1,4 +1,4 @@
-<img width="1331" height="632" alt="netse" src="https://github.com/user-attachments/assets/e77d33a1-4021-4cb3-b702-28b9b16ad3b3" />
+
 ﻿# 🌐 NetSentinel - Real-Time Uptime & Health Monitor
 
 NetSentinel is a lightweight, real-time website and API health monitoring dashboard built with **ASP.NET Core MVC**. It continuously tracks the availability and response times of registered endpoints using an asynchronous background worker service.
