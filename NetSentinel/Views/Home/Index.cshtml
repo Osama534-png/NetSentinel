@@ -1,0 +1,77 @@
+﻿@model IEnumerable<NetSentinel.Models.Website>
+
+@{
+    ViewData["Title"] = "NetSentinel Dashboard";
+    // Controller'dan gönderdiğimiz logları yakalıyoruz
+    var logs = ViewBag.LatestLogs as Dictionary<int, NetSentinel.Models.HealthLog>;
+}
+
+<div class="text-center mb-5 mt-4">
+    <h1 class="display-4 fw-bold text-dark">NetSentinel <i class="bi bi-activity text-primary"></i></h1>
+    <p class="lead text-secondary">Gerçek Zamanlı Uptime & Sistem Sağlığı Monitörü</p>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-8 offset-md-2">
+        <div class="card shadow-sm border-0 bg-light">
+            <div class="card-body p-4">
+                <h5 class="card-title fw-bold mb-3">Yeni Sistem Ekle</h5>
+                <form asp-action="AddWebsite" asp-controller="Home" method="post" class="d-flex gap-2">
+                    <input type="text" name="name" class="form-control form-control-lg" placeholder="Örn: GitHub" required />
+                    <input type="url" name="url" class="form-control form-control-lg" placeholder="https://github.com" required />
+                    <button type="submit" class="btn btn-primary btn-lg px-4 fw-bold">Takibe Al</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    @if (!Model.Any())
+    {
+            <div class="alert alert-warning text-center border-0 shadow-sm">Henüz takip edilen bir sistem yok. Yukarıdan eklemeye başlayın.</div>
+    }
+    else
+    {
+        @foreach (var site in Model)
+        {
+            // Bu siteye ait bir log var mı kontrol et
+            var hasLog = logs != null && logs.ContainsKey(site.Id);
+            var lastLog = hasLog ? logs[site.Id] : null;
+
+                    <div class="col-md-4 mb-4">
+                        <div class="card border-0 shadow h-100 rounded-3">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="card-title mb-0 fw-bold fs-4">@site.Name</h5>
+
+                            @* DURUM ROZETİ (UP/DOWN) *@
+                            @if (lastLog != null)
+                            {
+                                if (lastLog.IsUp)
+                                {
+                                                    <span class="badge bg-success rounded-pill px-3 py-2 fs-6 shadow-sm">UP (@lastLog.ResponseTime ms)</span>
+                                }
+                                else
+                                {
+                                                    <span class="badge bg-danger rounded-pill px-3 py-2 fs-6 shadow-sm">DOWN (@lastLog.StatusCode)</span>
+                                }
+                            }
+                            else
+                            {
+                                            <span class="badge bg-secondary rounded-pill px-3 py-2">Ping Bekleniyor...</span>
+                            }
+                                </div>
+
+                                <p class="text-muted small mb-3 text-truncate"><a href="@site.Url" target="_blank" class="text-decoration-none">@site.Url</a></p>
+                                <hr class="text-muted" />
+                                <div class="d-flex justify-content-between text-muted small">
+                                    <span><strong>Son Kontrol:</strong></span>
+                                    <span>@(lastLog != null ? lastLog.CheckDate.ToString("HH:mm:ss") : "Bilinmiyor")</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        }
+    }
+</div>
