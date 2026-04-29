@@ -1,3 +1,4 @@
+<img width="1331" height="632" alt="netse" src="https://github.com/user-attachments/assets/e77d33a1-4021-4cb3-b702-28b9b16ad3b3" />
 ﻿# 🌐 NetSentinel - Real-Time Uptime & Health Monitor
 
 NetSentinel is a lightweight, real-time website and API health monitoring dashboard built with **ASP.NET Core MVC**. It continuously tracks the availability and response times of registered endpoints using an asynchronous background worker service.
@@ -54,3 +55,6 @@ NetSentinel is a lightweight, real-time website and API health monitoring dashbo
    Press `F5` in Visual Studio or run `dotnet run` in the terminal. The background ping engine will start automatically.
 
 ## 📸 Screenshot
+
+<img width="1331" height="632" alt="netse" src="https://github.com/user-attachments/assets/db10e38e-230f-4edd-b8af-0eb224c1908b" />
+
