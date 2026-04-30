@@ -26,7 +26,7 @@ namespace NetSentinel.Services
             {
                 _logger.LogInformation("NetSentinel Ping Motoru çalışıyor: {time}", DateTimeOffset.Now);
 
-                // MÜLAKAT TAKTİĞİ: DbContext "Scoped" olduğu için Singleton olan bu serviste "Scope" açmalıyız!
+                //  DbContext "Scoped" olduğu için Singleton olan bu serviste "Scope" açmalıyız!
                 using (var scope = _scopeFactory.CreateScope())
                 {
                     var dbContext = scope.ServiceProvider.GetRequiredService<NetSentinelDbContext>();
@@ -69,7 +69,7 @@ namespace NetSentinel.Services
                     await dbContext.SaveChangesAsync(stoppingToken);
                 }
 
-                // Test için 1 dakikada bir çalışsın (Mülakatta bunu 5 dk falan yapabilirsin)
+                // Test için 1 dakikada bir çalışsın ()
                 await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
             }
         }
